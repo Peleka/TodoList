@@ -6,3 +6,23 @@
 .App > div {
   margin-right: 50px;
 }
+
+.isDone {
+  opacity: 0.5;
+}
+
+.active {
+  background-color: aquamarine;
+}
+
+.error {
+  border-color: #b8050b;
+  color: #b8050b;
+}
+
+.input {
+  border: none;
+  outline: none;
+  border: 1px solid;
+  border-color: black;
+}
