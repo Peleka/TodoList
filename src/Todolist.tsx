@@ -15,6 +15,7 @@ type TodolistPropsType = {
     changeTaskStatus: (taskID: string, newIsDoneValue: boolean, todolistID: string) => void
     removeTodolist: (todolistID: string) => void
     changeTaskTitle: (taskID: string, newTitle: string, todolistID: string) => void
+    changeTodoListTitle: (todolistID: string, newTitle: string) => void
 }
 
 function Todolist(props: TodolistPropsType) {
@@ -30,7 +31,10 @@ function Todolist(props: TodolistPropsType) {
                         type={"checkbox"}
                         checked={t.isDone}
                     />
-                    <EditableSpan title={t.title}/>
+                    <EditableSpan
+                        title={t.title}
+                        changeTaskTitleHandler={changeTaskTitleHandler}
+                    />
                     <button onClick={() => {
                         props.removeTask(t.id, props.todolistID)
                     }}>x
@@ -48,9 +52,12 @@ function Todolist(props: TodolistPropsType) {
         props.addTasks(title, props.todolistID)
     }
 
+    const changeTodoListTitle = (newTitle: string) => {
+        props.changeTodoListTitle(props.todolistID, newTitle)
+    }
     return (
         <div>
-            <h3>{props.title}</h3>
+            <EditableSpan title={props.title} changeTaskTitleHandler={changeTodoListTitle}/>
             <button onClick={onClickRemoveTodolist}>x</button>
             <AddItemForm addItem={addTask}/>
             <ul>
