@@ -6,7 +6,7 @@ import {Button, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 
 
-type TodolistPropsType = {
+export type TodolistPropsType = {
     todolistID: string
     title: string
     tasks: Array<TaskType>
