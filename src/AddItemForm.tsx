@@ -1,12 +1,13 @@
 import React, {useState, KeyboardEvent, ChangeEvent} from 'react'
-import {Button, IconButton, TextField} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
 type AddItemFormType = {
     addItem: (title: string) => void
 }
 
-function AddItemForm(props: AddItemFormType) {
+const AddItemForm = React.memo((props: AddItemFormType) => {
+    console.log('AddItemForm')
     const [title, setTitle] = useState<string>("")
     const [error, setError] = useState<string | null>(null)
 
@@ -14,7 +15,9 @@ function AddItemForm(props: AddItemFormType) {
         setTitle(e.currentTarget.value)
     }
     const onKeyPressAddItem = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError('')
+        if( error != null) {
+            setError('')
+        }
         if (e.key === "Enter") {
             onClickAddItem()
         }
@@ -50,6 +53,6 @@ function AddItemForm(props: AddItemFormType) {
             </IconButton>
         </div>
     )
-}
+})
 
 export default AddItemForm;
