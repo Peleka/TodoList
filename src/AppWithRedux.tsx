@@ -42,61 +42,48 @@ function AppWithRedux() {
 
     const changeFilter = useCallback((value: FilterValuesType, todolistID: string) => {
         dispatch(changeTodolistFilterAC(value, todolistID))
-    }, [])
+    }, [dispatch])
 
     const removeTask = useCallback( (taskID: string, todolistID: string) => {
         // const filteredTasks = tasks[todolistID].filter(t => t.id !== taskID)
         // tasks[todolistID] = filteredTasks
         // setTasks({...tasks})
         dispatch(removeTaskAC(taskID, todolistID))
-    }, [])
+    }, [dispatch])
 
     const addTasks = useCallback( (title: string, todolistID: string) => {
         dispatch(addTaskAC(title, todolistID))
-    }, [])
+    }, [dispatch])
 
     const changeTaskStatus = useCallback((taskID: string, newIsDoneValue: boolean, todolistID: string) => {
         dispatch(changeTaskStatusAC(taskID, newIsDoneValue, todolistID))
-    }, [])
+    }, [dispatch])
 
     const changeTaskTitle = useCallback( (taskID: string, newTitle: string, todolistID: string) => {
         dispatch(changeTaskTitleAC(taskID, newTitle, todolistID))
-    }, [])
+    }, [dispatch])
 
     const removeTodolist = useCallback((todolistID: string) => {
         dispatch(removeTodolistAC(todolistID))
         delete tasks[todolistID]
-    }, [])
+    }, [dispatch, tasks])
 
     const changeTodoListTitle = useCallback( (todolistID: string, title: string) => {
         dispatch(changeTodolistTitleAC(todolistID, title))
-    }, [])
+    }, [dispatch])
 
     const addTodoList = useCallback((title: string) => {
         const action = addTodolistAC(title)
         dispatch(action)
-    }, [])
+    }, [dispatch])
 
 //UI:
-//     function getTaskForTodoList(todolist: TodolistType) {
-//         switch (todolist.filter) {
-//             case "active":
-//                 return tasks[todolist.id].filter(t => !t.isDone)
-//                 break;
-//             case "completed":
-//                 return tasks[todolist.id].filter(t => t.isDone)
-//                 break;
-//             default:
-//                 return tasks[todolist.id]
-//         }
-//     }
 
     const todoListsComponents = todoLists.map(tl => {
         return (
-            <Grid item>
+            <Grid item key={tl.id}>
                 <Paper elevation={3} style={{padding: "10px"}}>
                     <Todolist
-                        key={tl.id}
                         todolistID={tl.id}
                         title={tl.title}
                         tasks={tasks[tl.id]}
