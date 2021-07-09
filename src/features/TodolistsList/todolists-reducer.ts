@@ -1,12 +1,8 @@
-import {todolistsAPI, TodolistType} from '../../api/todolists-api'
+import {ResponseStatuses, todolistsAPI, TodolistType} from '../../api/todolists-api'
 import {Dispatch} from 'redux'
-import {
-    RequestStatusType,
-    setAppErrorAC,
-    SetAppErrorActionType,
-    setAppStatusAC,
-    SetAppStatusActionType
-} from "../../app/app-reducer";
+import {RequestStatusType, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../../app/app-reducer";
+import {AxiosError} from "axios";
+import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 const initialState: Array<TodolistDomainType> = []
 
@@ -41,13 +37,11 @@ export const changeTodolistFilterAC = (id: string, filter: FilterValuesType) => 
     id,
     filter
 } as const)
-
 export const changeTodolistEntityStatusAC = (id: string, entityStatus: RequestStatusType) => ({
     type: 'CHANGE-TODOLIST-ENTITY-STATUS',
     id,
     entityStatus
 } as const)
-
 export const setTodolistsAC = (todolists: Array<TodolistType>) => ({type: 'SET-TODOLISTS', todolists} as const)
 
 // thunks
@@ -69,7 +63,6 @@ export const removeTodolistTC = (todolistId: string) => {
             .then((res) => {
                 dispatch(removeTodolistAC(todolistId))
                 dispatch(setAppStatusAC('succeeded'))
-
             })
     }
 }
@@ -78,19 +71,15 @@ export const addTodolistTC = (title: string) => {
         dispatch(setAppStatusAC('loading'))
         todolistsAPI.createTodolist(title)
             .then((res) => {
-                if (res.data.resultCode === 0) {
-                    const task = res.data.data.item
-                    dispatch(addTodolistAC(task))
+                if (res.data.resultCode === ResponseStatuses.success) {
+                    dispatch(addTodolistAC(res.data.data.item))
                     dispatch(setAppStatusAC('succeeded'))
                 } else {
-                    if (res.data.messages.length) {
-                        dispatch(setAppErrorAC(res.data.messages[0]))
-                    } else {
-                        dispatch(setAppErrorAC('Some error occurred'))
-                    }
-                    dispatch(setAppStatusAC('failed'))
+                    handleServerAppError(res.data, dispatch)
                 }
-
+            })
+            .catch((err: AxiosError) => {
+                handleServerNetworkError(dispatch, err.message)
             })
     }
 }
