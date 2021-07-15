@@ -1,29 +1,30 @@
 import axios from 'axios'
 
-const settings = {
+const instance = axios.create({
+    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
     headers: {
         'API-KEY': '9c832af0-5e6b-4bff-a294-4118cc9c6256'
     }
-}
-const instance = axios.create({
-    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
-    ...settings
 })
 
 // api
 export const todolistsAPI = {
     getTodolists() {
-        return instance.get<TodolistType[]>('todo-lists');
+        const promise = instance.get<TodolistType[]>('todo-lists');
+        return promise;
     },
     createTodolist(title: string) {
-        return instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title: title});
+        const promise = instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title: title});
+        return promise;
     },
     deleteTodolist(id: string) {
-        return instance.delete<ResponseType>(`todo-lists/${id}`);
+        const promise = instance.delete<ResponseType>(`todo-lists/${id}`);
+        return promise;
     },
     updateTodolist(id: string, title: string) {
-        return instance.put<ResponseType>(`todo-lists/${id}`, {title: title});
+        const promise = instance.put<ResponseType>(`todo-lists/${id}`, {title: title});
+        return promise;
     },
     getTasks(todolistId: string) {
         return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`);
@@ -39,13 +40,24 @@ export const todolistsAPI = {
     }
 }
 
-// types
-export enum ResponseStatuses {
-    success = 0,
-    error = 1,
-    captcha = 10
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string
 }
 
+export const authAPI = {
+    login(data: LoginParamsType) {
+        return instance.post<ResponseType<{ userId?: number }>>(`auth/login`, data);
+    },
+    me() {
+        return instance.get<ResponseType<{id: number, email: string, login: string}>>(`auth/me`)
+    }
+
+}
+
+// types
 export type TodolistType = {
     id: string
     title: string
