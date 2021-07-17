@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import './App.css'
 import {
     AppBar,
@@ -18,6 +18,7 @@ import {AppRootStateType} from './store'
 import {initializedAppTC, RequestStatusType} from './app-reducer'
 import {BrowserRouter, Route} from "react-router-dom";
 import {Login} from "../features/Login/Login";
+import {logoutTС} from "../features/Login/login-reducer";
 
 type PropsType = {
     demo?: boolean
@@ -36,12 +37,13 @@ function App({demo = false}: PropsType) {
         dispatch(initializedAppTC())
     }, [])
 
+    const logoutHandler = useCallback(() => {
+        dispatch(logoutTС())
+
+    }, [])
+
     if(!isInitialised) {
         return <div><CircularProgress /></div>
-    }
-
-    const logoutHandler = () => {
-
     }
 
     return (
@@ -57,7 +59,6 @@ function App({demo = false}: PropsType) {
                             News
                         </Typography>
                         {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
-                        <Button color="inherit">Login</Button>
                     </Toolbar>
                     {status === 'loading' && <LinearProgress/>}
                 </AppBar>
