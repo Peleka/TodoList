@@ -12,10 +12,7 @@ type InitialStateType = typeof initialState
 export const loginReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case "login/SET-IS-LOGGED-IT":
-            return {
-                ...state,
-                isLoggedIn: action.value
-            }
+            return {...state, isLoggedIn: action.value}
         default:
             return state
     }
