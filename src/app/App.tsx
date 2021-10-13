@@ -43,6 +43,7 @@ function App({demo = false}: PropsType) {
     }, [])
 
     if(!isInitialised) {
+        debugger
         return <div><CircularProgress /></div>
     }
 
