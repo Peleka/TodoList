@@ -26,7 +26,6 @@ type PropsType = {
 
 function App({demo = false}: PropsType) {
 
-
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     const isInitialised = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
     const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
@@ -43,7 +42,6 @@ function App({demo = false}: PropsType) {
     }, [])
 
     if(!isInitialised) {
-        debugger
         return <div><CircularProgress /></div>
     }
 

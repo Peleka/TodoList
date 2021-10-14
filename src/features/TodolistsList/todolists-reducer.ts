@@ -74,7 +74,6 @@ export const removeTodolistTC = (todolistId: string) => {
     }
 }
 export const addTodolistTC = (title: string) => {
-    debugger
     return (dispatch: Dispatch) => {
         dispatch(setAppStatusAC({status: 'loading'}))
         todolistsAPI.createTodolist(title)
