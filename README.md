@@ -1,1 +1,1 @@
-You can see this project here https://Peleka.github.io/TodoList
+You can view this project https://Peleka.github.io/TodoList
