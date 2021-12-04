@@ -23,7 +23,7 @@ import {logOutTC} from "../features/Login/login-reducer";
 type PropsType = {
     demo?: boolean
 }
-
+///test
 function App({demo = false}: PropsType) {
 
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
@@ -34,12 +34,12 @@ function App({demo = false}: PropsType) {
 
     useEffect(() => {
         dispatch(initializedAppTC())
-    }, [])
+    }, [dispatch])
 
     const logoutHandler = useCallback(() => {
         dispatch(logOutTC())
 
-    }, [])
+    }, [dispatch])
 
     if(!isInitialised) {
         return <div><CircularProgress /></div>
