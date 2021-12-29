@@ -16,15 +16,12 @@ import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from './store'
 import {initializedAppTC, RequestStatusType} from './app-reducer'
-import {BrowserRouter, Route} from "react-router-dom";
+import {HashRouter, Route} from "react-router-dom";
 import {Login} from "../features/Login/Login";
 import {logOutTC} from "../features/Login/login-reducer";
 
-type PropsType = {
-    demo?: boolean
-}
-///test
-function App({demo = false}: PropsType) {
+
+function App() {
 
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     const isInitialised = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
@@ -46,28 +43,27 @@ function App({demo = false}: PropsType) {
     }
 
     return (
-        <BrowserRouter>
-            <div className="App">
+        <HashRouter>
+            <div>
                 <ErrorSnackbar/>
                 <AppBar position="static">
-                    <Toolbar>
+                    <Toolbar className={"Toolbar"}>
                         <IconButton edge="start" color="inherit" aria-label="menu">
                             <Menu/>
                         </IconButton>
                         <Typography variant="h6">
-                            News
+                            My Planner
                         </Typography>
                         {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
                     </Toolbar>
                     {status === 'loading' && <LinearProgress/>}
                 </AppBar>
                 <Container fixed>
-                    <Route exact path={"/"} render={() => <TodolistsList demo={demo}/>}/>
+                    <Route exact path={"/"} render={() => <TodolistsList/>}/>
                     <Route path={"/login"} render={() => <Login/>}/>
-
                 </Container>
             </div>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 

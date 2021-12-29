@@ -43,16 +43,6 @@ export const Login = () => {
         <Grid item xs={4}>
             <form onSubmit={formik.handleSubmit}>
                 <FormControl>
-                    <FormLabel>
-                        <p>To log in get registered
-                            <a href={'https://social-network.samuraijs.com/'}
-                               target={'_blank'}>here
-                            </a>
-                        </p>
-                        <p>or use common test account credentials:</p>
-                        <p>Email: free@samuraijs.com</p>
-                        <p>Password: free</p>
-                    </FormLabel>
                     <FormGroup>
                         <TextField
                             label="Email"
@@ -74,11 +64,20 @@ export const Login = () => {
                                 checked={formik.values.rememberMe}
                             />}
                         />
-                        <Button type="submit" variant={'contained'} color={'primary'}>Login</Button>
+                        <Button type='submit' style={{color: '#5b84ce'}} variant='outlined'>Login</Button>
                     </FormGroup>
+                    <FormLabel>
+                        <p>To log in get registered
+                            <a href={'https://social-network.samuraijs.com/'}
+                               target={'_blank'}> here
+                            </a>
+                        </p>
+                        <p>or use common test account credentials:</p>
+                        <p>Email: free@samuraijs.com</p>
+                        <p>Password: free</p>
+                    </FormLabel>
                 </FormControl>
             </form>
         </Grid>
     </Grid>
-
 }

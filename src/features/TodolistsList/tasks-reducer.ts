@@ -70,8 +70,6 @@ const slice = createSlice({
 export const {removeTaskAC, addTaskAC, updateTaskAC} = slice.actions
 export const tasksReducer = slice.reducer
 
-// thunks
-
 export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}))
     todolistsAPI.createTask(todolistId, title)
@@ -123,7 +121,6 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
             })
     }
 
-// types
 export type UpdateDomainTaskModelType = {
     title?: string
     description?: string

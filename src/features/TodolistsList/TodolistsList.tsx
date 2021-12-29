@@ -17,11 +17,8 @@ import {AddItemForm} from '../../components/AddItemForm/AddItemForm'
 import {Todolist} from './Todolist/Todolist'
 import {Redirect} from "react-router-dom";
 
-type PropsType = {
-    demo?: boolean
-}
 
-export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
+export const TodolistsList = () => {
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const isLoggedIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
@@ -29,9 +26,6 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (demo || !isLoggedIn) {
-            return;
-        }
         const thunk = fetchTodolistsTC()
         dispatch(thunk)
     }, [])
@@ -91,7 +85,7 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
                     let allTodolistTasks = tasks[tl.id]
 
                     return <Grid item key={tl.id}>
-                        <Paper style={{padding: '10px'}}>
+                        <Paper style={{padding: '10px', opacity: '0.8'}}>
                             <Todolist
                                 todolist={tl}
                                 tasks={allTodolistTasks}
@@ -102,7 +96,6 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
                                 removeTodolist={removeTodolist}
                                 changeTaskTitle={changeTaskTitle}
                                 changeTodolistTitle={changeTodolistTitle}
-                                demo={demo}
                             />
                         </Paper>
                     </Grid>
